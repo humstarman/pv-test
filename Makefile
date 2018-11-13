@@ -1,11 +1,10 @@
 SHELL=/bin/bash
 LOCAL_REGISTRY=10.254.0.50:5000
 NAME="pv-test"
-TAG1=without
-TAG2=with
-#IMAGE=${LOCAL_REGISTRY}/${NAME}:${TAG}
-IMAGE1=${LOCAL_REGISTRY}/${NAME}:${TAG1}
-IMAGE2=${LOCAL_REGISTRY}/${NAME}:${TAG2}
+TAG=v2
+IMAGE=${LOCAL_REGISTRY}/${NAME}:${TAG}
+IMAGE1=${IMAGE}
+IMAGE2=${IMAGE}
 NAMESPACE="default"
 NAME1=${NAME}-without
 NAME2=${NAME}-with
@@ -19,15 +18,13 @@ PVC_NAME=${NAME}-claim
 FROM=/tmp/pics
 TO=/home/pics
 
-all: build push deploy mv
+all: build push deploy
 
 build:
-	@docker build -t ${IMAGE1} ./without
-	@docker build -t ${IMAGE2} ./with
+	@docker build -t ${IMAGE} .
 
 push:
-	@docker push ${IMAGE1}
-	@docker push ${IMAGE2}
+	@docker push ${IMAGE}
 
 cp:
 	@find ${MANIFEST} -type f -name "*.sed" | sed s?".sed"?""?g | xargs -I {} cp {}.sed {}

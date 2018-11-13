@@ -7,5 +7,6 @@ RUN mv /workspace/THPBuilder/target/THPBuilder-0.0.1-SNAPSHOT.war /workspace/THP
 FROM tomcat:7.0.77-jre8
 WORKDIR /usr/local/tomcat/conf
 ADD ./conf/ ./
+ADD ./pics/ /tmp/pics/
 ADD ./pics/ /home/pics/
 COPY --from=build /workspace/THPBuilder.war /usr/local/tomcat/webapps/
